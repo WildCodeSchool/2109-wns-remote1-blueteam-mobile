@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Blue_Mobile",
-    "slug": "Blue_Mobile",
+    "name": "application",
+    "slug": "application",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",

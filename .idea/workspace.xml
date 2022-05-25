@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="addcfb84-238d-4965-bf21-eb8b02763462" name="Changes" comment="">
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/.expo-shared/assets.json" beforeDir="false" afterPath="$PROJECT_DIR$/Blue_Mobile/.expo-shared/assets.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/Blue_Mobile/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Blue_Mobile/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/app.json" beforeDir="false" afterPath="$PROJECT_DIR$/Blue_Mobile/app.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/babel.config.js" beforeDir="false" afterPath="$PROJECT_DIR$/Blue_Mobile/babel.config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/components/EditScreenInfo.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Blue_Mobile/components/EditScreenInfo.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/components/StyledText.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Blue_Mobile/components/StyledText.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/components/Themed.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Blue_Mobile/components/Themed.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/components/__tests__/StyledText-test.js" beforeDir="false" afterPath="$PROJECT_DIR$/Blue_Mobile/components/__tests__/StyledText-test.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/constants/Colors.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Blue_Mobile/constants/Colors.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/constants/Layout.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Blue_Mobile/constants/Layout.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/hooks/useCachedResources.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Blue_Mobile/hooks/useCachedResources.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/hooks/useColorScheme.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Blue_Mobile/hooks/useColorScheme.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/navigation/LinkingConfiguration.ts" beforeDir="false" afterPath="$PROJECT_DIR$/Blue_Mobile/navigation/LinkingConfiguration.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/navigation/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Blue_Mobile/navigation/index.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/Blue_Mobile/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/screens/ModalScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Blue_Mobile/screens/ModalScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/screens/NotFoundScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Blue_Mobile/screens/NotFoundScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/screens/TabOneScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Blue_Mobile/screens/TabOneScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/screens/TabTwoScreen.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Blue_Mobile/screens/TabTwoScreen.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/tsconfig.json" beforeDir="false" afterPath="$PROJECT_DIR$/Blue_Mobile/tsconfig.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/types.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/Blue_Mobile/types.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Blue_Mobile/yarn.lock" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="CodeStyleSettingsInfer">
+    <option name="done" value="true" />
+  </component>
+  <component name="ComposerSettings">
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectCodeStyleSettingsMigration">
+    <option name="version" value="2" />
+  </component>
+  <component name="ProjectId" id="28N9LYtfTzEsDdp1JmhIjzZDfyE" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="flattenPackages" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "dart.analysis.tool.window.visible": "false",
+    "last_opened_file_path": "C:/Users/Hervé/IdeaProjects/2109-wns-remote1-blueteam-mobile",
+    "nodejs_package_manager_path": "npm",
+    "show.migrate.to.gradle.popup": "false",
+    "ts.external.directory.path": "C:\\Users\\Hervé\\AppData\\Local\\JetBrains\\Toolbox\\apps\\IDEA-U\\ch-0\\221.5080.210\\plugins\\JavaScriptLanguage\\jsLanguageServicesImpl\\external"
+  }
+}]]></component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="addcfb84-238d-4965-bf21-eb8b02763462" name="Changes" comment="" />
+      <created>1651046120558</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1651046120558</updated>
+      <workItem from="1651046125003" duration="440000" />
+      <workItem from="1651046832790" duration="834000" />
+      <workItem from="1651047745760" duration="1646000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+</project>
