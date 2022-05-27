@@ -45,35 +45,37 @@ const RegisterScreen = ({ navigation }: Props) => {
     <Header>Create Account</Header>
 
     <TextInput
-    label="Name"
-    returnKeyType="next"
-    value={name.value}
-    onChangeText={text => setName({ value: text, error: '' })}
-    error={!!name.error}
-    errorText={name.error}
+        label="Name"
+        returnKeyType="next"
+        value={name.value}
+        onChangeText={text => setName({ value: text, error: '' })}
+        error={!!name.error}
+        errorText={name.error}
+        autoComplete=""
     />
 
     <TextInput
-    label="Email"
-    returnKeyType="next"
-    value={email.value}
-    onChangeText={text => setEmail({ value: text, error: '' })}
-    error={!!email.error}
-    errorText={email.error}
-    autoCapitalize="none"
-    autoCompleteType="email"
-    textContentType="emailAddress"
-    keyboardType="email-address"
+        label="Email"
+        returnKeyType="next"
+        value={email.value}
+        onChangeText={text => setEmail({ value: text, error: '' })}
+        error={!!email.error}
+        errorText={email.error}
+        autoCapitalize="none"
+        autoComplete="email"
+        textContentType="emailAddress"
+        keyboardType="email-address"
     />
 
     <TextInput
         label="Password"
-    returnKeyType="done"
-    value={password.value}
-    onChangeText={text => setPassword({ value: text, error: '' })}
-    error={!!password.error}
-    errorText={password.error}
-    secureTextEntry = {true}
+        returnKeyType="done"
+        value={password.value}
+        onChangeText={text => setPassword({ value: text, error: '' })}
+        error={!!password.error}
+        errorText={password.error}
+        secureTextEntry={true}
+        autoComplete="password"
     />
 
     <Button mode="contained" onPress={_onSignUpPressed} style={styles.button}>
