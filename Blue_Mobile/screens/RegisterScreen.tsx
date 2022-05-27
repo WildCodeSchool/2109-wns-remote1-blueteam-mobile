@@ -1,4 +1,5 @@
 import React, { memo, useState } from 'react';
+import { gql, useMutation } from '@apollo/client';
 import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
@@ -17,41 +18,84 @@ type Props = {
     navigation: Navigation;
 };
 
+interface IUserRegister {
+    firstname: string;
+    lastname: string;
+    email: string;
+    job: string;
+    password: string;
+}
+
+const REGISTER = gql`
+  mutation Register($data: RegisterInput!) {
+    register(data: $data) {
+      id
+    }
+  }
+`;
+
 const RegisterScreen = ({ navigation }: Props) => {
-    const [name, setName] = useState({ value: '', error: '' });
+    const [register] = useMutation<
+        { register: { _id: string } }, // server answer
+        { data: IUserRegister } // data sent to server
+    >(REGISTER);
+
+    const [firstname, setFirstname] = useState({ value: '', error: '' });
+    const [lastname, setLastname] = useState({ value: '', error: '' });
     const [email, setEmail] = useState({ value: '', error: '' });
+    const [job, setJob] = useState({ value: '', error: '' });
     const [password, setPassword] = useState({ value: '', error: '' });
 
-    const _onSignUpPressed = () => {
-        const nameError = nameValidator(name.value);
+    const onSubmit = () => {
+        const nameError = nameValidator(firstname.value);
         const emailError = emailValidator(email.value);
         const passwordError = passwordValidator(password.value);
 
         if (emailError || passwordError || nameError) {
-            setName({ ...name, error: nameError });
+            setFirstname({ ...firstname, error: nameError });
             setEmail({ ...email, error: emailError });
             setPassword({ ...password, error: passwordError });
             return;
         }
 
+        const newUser = {
+            firstname: firstname.value,
+            lastname: lastname.value,
+            email: email.value,
+            job: job.value,
+            password: password.value,
+        };
+      
+        register({ variables: { data: newUser } });
+      
         navigation.navigate('Dashboard');
     };
 
     return (
-        <Background>
+    <Background>
 
     <Logo />
 
     <Header>Create Account</Header>
 
     <TextInput
-        label="Name"
+        label="Firstname"
         returnKeyType="next"
-        value={name.value}
-        onChangeText={text => setName({ value: text, error: '' })}
-        error={!!name.error}
-        errorText={name.error}
-        autoComplete=""
+        value={firstname.value}
+        onChangeText={text => setFirstname({ value: text, error: '' })}
+        error={!!firstname.error}
+        errorText={firstname.error}
+        autoComplete="firstname"
+    />
+
+    <TextInput
+        label="Lastname"
+        returnKeyType="next"
+        value={lastname.value}
+        onChangeText={text => setLastname({ value: text, error: '' })}
+        error={!!lastname.error}
+        errorText={lastname.error}
+        autoComplete="lastname"
     />
 
     <TextInput
@@ -68,6 +112,16 @@ const RegisterScreen = ({ navigation }: Props) => {
     />
 
     <TextInput
+        label="Job"
+        returnKeyType="next"
+        value={job.value}
+        onChangeText={text => setJob({ value: text, error: '' })}
+        error={!!job.error}
+        errorText={job.error}
+        autoComplete="job"
+    />
+
+    <TextInput
         label="Password"
         returnKeyType="done"
         value={password.value}
@@ -78,7 +132,7 @@ const RegisterScreen = ({ navigation }: Props) => {
         autoComplete="password"
     />
 
-    <Button mode="contained" onPress={_onSignUpPressed} style={styles.button}>
+    <Button mode="contained" onPress={onSubmit} style={styles.button}>
         Sign Up
     </Button>
 
