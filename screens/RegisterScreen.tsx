@@ -35,9 +35,9 @@ const REGISTER = gql`
 `;
 
 const RegisterScreen = ({ navigation }: Props) => {
-    const [register] = useMutation<
-        { register: { _id: string } }, // server answer
-        { data: IUserRegister } // data sent to server
+    const [register, { data, loading, error }] = useMutation<
+        { register: { _id: string } },
+        { data: IUserRegister }
     >(REGISTER);
 
     const [firstname, setFirstname] = useState({ value: '', error: '' });
@@ -65,9 +65,9 @@ const RegisterScreen = ({ navigation }: Props) => {
             job: job.value,
             password: password.value,
         };
-      
+        
         register({ variables: { data: newUser } });
-      
+        
         navigation.navigate('Dashboard');
     };
 

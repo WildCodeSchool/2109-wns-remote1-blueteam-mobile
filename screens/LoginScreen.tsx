@@ -1,4 +1,5 @@
 import React, { memo, useState } from 'react';
+import { gql, useLazyQuery } from '@apollo/client';
 import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
@@ -13,11 +14,44 @@ type Props = {
     navigation: Navigation;
 };
 
+interface IUserLogin {
+    email: string;
+    password: string;
+}
+
+interface IUser {
+    id: string;
+    firstname: string;
+    lastname: string;
+    email: string;
+    job: string;
+    role: string;
+}
+
+const LOGIN = gql`
+    query Query($data: LoginInput!) {
+        login(data: $data) {
+            id
+            firstname
+            lastname
+            email
+            job
+            role
+        }
+    }
+`;
+
 const LoginScreen = ({ navigation }: Props) => {
+
+    const [login, { error, data }] = useLazyQuery<
+        { login: IUser },
+        { data: IUserLogin }
+    >(LOGIN);
+
     const [email, setEmail] = useState({ value: '', error: '' });
     const [password, setPassword] = useState({ value: '', error: '' });
 
-    const _onLoginPressed = () => {
+    const onSubmit = async () => {
         const emailError = emailValidator(email.value);
         const passwordError = passwordValidator(password.value);
 
@@ -27,16 +61,15 @@ const LoginScreen = ({ navigation }: Props) => {
             return;
         }
 
+        await login({ variables: { data: { email: email.value, password: password.value } } });
+
         navigation.navigate('Dashboard');
     };
 
     return (
         <Background>
-
             <Logo />
-
             <Header>Welcome back.</Header>
-
             <TextInput
                 label="Email"
                 returnKeyType="next"
@@ -69,7 +102,7 @@ const LoginScreen = ({ navigation }: Props) => {
                 </TouchableOpacity>
             </View>
 
-            <Button mode="contained" onPress={_onLoginPressed}>
+            <Button mode="contained" onPress={onSubmit}>
                 Login
             </Button>
 
