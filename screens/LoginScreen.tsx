@@ -1,6 +1,6 @@
 import React, { memo, useState } from 'react';
 import { gql, useLazyQuery } from '@apollo/client';
-import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
+import { TouchableOpacity, StyleSheet, Text, View, ToastAndroid } from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
@@ -47,6 +47,10 @@ const LoginScreen = ({ navigation }: Props) => {
         { login: IUser },
         { data: IUserLogin }
     >(LOGIN);
+
+    if (error) {
+        ToastAndroid.show(error.message, ToastAndroid.SHORT);
+    }
 
     const [email, setEmail] = useState({ value: '', error: '' });
     const [password, setPassword] = useState({ value: '', error: '' });
