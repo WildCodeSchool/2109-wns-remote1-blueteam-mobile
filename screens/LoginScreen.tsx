@@ -1,4 +1,4 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useContext, useEffect, useState } from 'react';
 import { gql, useLazyQuery } from '@apollo/client';
 import { TouchableOpacity, StyleSheet, Text, View, ToastAndroid } from 'react-native';
 import Background from '../components/Background';
@@ -9,24 +9,11 @@ import TextInput from '../components/TextInput';
 import { theme } from '../core/theme';
 import { emailValidator, passwordValidator } from '../core/utils';
 import { Navigation } from './types';
+import userContext from '../context/userContext';
 
 type Props = {
     navigation: Navigation;
 };
-
-interface IUserLogin {
-    email: string;
-    password: string;
-}
-
-interface IUser {
-    id: string;
-    firstname: string;
-    lastname: string;
-    email: string;
-    job: string;
-    role: string;
-}
 
 const LOGIN = gql`
     query Query($data: LoginInput!) {
@@ -42,15 +29,18 @@ const LOGIN = gql`
 `;
 
 const LoginScreen = ({ navigation }: Props) => {
-
-    const [login, { error, data }] = useLazyQuery<
-        { login: IUser },
-        { data: IUserLogin }
-    >(LOGIN);
+    const [, setUser] = useContext(userContext);
+    const [login, { error, data }] = useLazyQuery(LOGIN);
 
     if (error) {
         ToastAndroid.show(error.message, ToastAndroid.SHORT);
     }
+
+    useEffect(() => {
+        if (data) {
+          setUser(data.login);
+        }
+    }, [data]);
 
     const [email, setEmail] = useState({ value: '', error: '' });
     const [password, setPassword] = useState({ value: '', error: '' });

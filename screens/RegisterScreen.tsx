@@ -1,6 +1,6 @@
-import React, { memo, useState } from 'react';
+import React, { memo, useContext, useEffect, useState } from 'react';
 import { gql, useMutation } from '@apollo/client';
-import { View, Text, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, StyleSheet, TouchableOpacity, ToastAndroid } from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
@@ -13,38 +13,44 @@ import {
     passwordValidator,
     nameValidator,
 } from '../core/utils';
+import userContext from '../context/userContext';
 
 type Props = {
     navigation: Navigation;
 };
 
-interface IUserRegister {
-    firstname: string;
-    lastname: string;
-    email: string;
-    job: string;
-    password: string;
-}
-
 const REGISTER = gql`
   mutation Register($data: RegisterInput!) {
     register(data: $data) {
-      id
+        id
+        firstname
+        lastname
+        email
+        job
+        role
     }
   }
 `;
 
 const RegisterScreen = ({ navigation }: Props) => {
-    const [register, { data, loading, error }] = useMutation<
-        { register: { _id: string } },
-        { data: IUserRegister }
-    >(REGISTER);
+    const [, setUser] = useContext(userContext);
+    const [register, { data, error }] = useMutation(REGISTER);
+
+    if (error) {
+        ToastAndroid.show(error.message, ToastAndroid.SHORT);
+    }
 
     const [firstname, setFirstname] = useState({ value: '', error: '' });
     const [lastname, setLastname] = useState({ value: '', error: '' });
     const [email, setEmail] = useState({ value: '', error: '' });
     const [job, setJob] = useState({ value: '', error: '' });
     const [password, setPassword] = useState({ value: '', error: '' });
+
+    useEffect(() => {
+        if (data) {
+          setUser(data.register);
+        }
+    }, [data]);
 
     const onSubmit = () => {
         const nameError = nameValidator(firstname.value);
