@@ -15,15 +15,7 @@ import userContext from './context/userContext';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import uri from './constants/Uri';
-
-interface IUser {
-  id: string;
-  firstname: string;
-  lastname: string;
-  email: string;
-  job: string;
-  role: string;
-}
+import { IUser } from './interfaces/users';
 
 const link = createHttpLink({
   uri,
