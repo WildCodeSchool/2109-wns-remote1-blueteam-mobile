@@ -2,8 +2,8 @@ import { createContext, Dispatch, SetStateAction } from 'react';
 
 import { IUser } from '../interfaces/users';
 
-const userContext = createContext<
+const UserContext = createContext<
   [IUser | undefined, Dispatch<SetStateAction<IUser | undefined>>]
 >([undefined, () => undefined]);
 
-export default userContext;
+export default UserContext;
