@@ -9,6 +9,7 @@ import TextInput from '../components/TextInput';
 import { theme } from '../core/theme';
 import { emailValidator, passwordValidator } from '../core/utils';
 import { Navigation } from './types';
+import * as SecureStore from 'expo-secure-store';
 import userContext from '../context/userContext';
 
 type Props = {
@@ -30,16 +31,31 @@ const LOGIN = gql`
 
 const LoginScreen = ({ navigation }: Props) => {
     const [, setUser] = useContext(userContext);
-    const [login, { error, data }] = useLazyQuery(LOGIN);
+    const [logUserIn, { error, data }] = useLazyQuery(LOGIN);
+
+    console.log(data);
 
     if (error) {
         ToastAndroid.show(error.message, ToastAndroid.SHORT);
     }
 
     useEffect(() => {
-        if (data) {
-          setUser(data.login);
-        }
+        const saveValue = async (key: string, value: string) => {
+            await SecureStore.setItemAsync(key, value);
+        };
+        
+        const hello = data?.login;
+
+        if (hello) {
+            const { token, ...user } = hello;
+
+            if (user) {
+            setUser(user);
+            saveValue('user', JSON.stringify(user));
+            saveValue('token', token);
+            };
+        };
+
     }, [data]);
 
     const [email, setEmail] = useState({ value: '', error: '' });
@@ -55,9 +71,7 @@ const LoginScreen = ({ navigation }: Props) => {
             return;
         }
 
-        await login({ variables: { data: { email: email.value, password: password.value } } });
-
-        navigation.navigate('Dashboard');
+        await logUserIn({ variables: { data: { email: email.value, password: password.value } } });
     };
 
     return (
@@ -76,7 +90,6 @@ const LoginScreen = ({ navigation }: Props) => {
                 textContentType="emailAddress"
                 keyboardType="email-address"
             />
-
             <TextInput
                 label="Password"
                 returnKeyType="done"
@@ -87,7 +100,6 @@ const LoginScreen = ({ navigation }: Props) => {
                 secureTextEntry={true}
                 autoComplete="password"
             />
-
             <View style={styles.forgotPassword}>
                 <TouchableOpacity
                     onPress={() => navigation.navigate('ForgotPasswordScreen')}
@@ -95,11 +107,9 @@ const LoginScreen = ({ navigation }: Props) => {
                     <Text style={styles.label}>Forgot your password?</Text>
                 </TouchableOpacity>
             </View>
-
             <Button mode="contained" onPress={onSubmit}>
                 Login
             </Button>
-
             <View style={styles.row}>
                 <Text style={styles.label}>Don’t have an account? </Text>
                 <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
