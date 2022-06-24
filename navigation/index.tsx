@@ -17,6 +17,7 @@ import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../typ
 import LinkingConfiguration from './LinkingConfiguration';
 import RegisterScreen from "../screens/RegisterScreen";
 import {Dashboard, ForgotPasswordScreen, HomeScreen, LoginScreen} from "../screens";
+import * as SecureStore from 'expo-secure-store';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -26,7 +27,7 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
       <RootNavigator />
     </NavigationContainer>
   );
-}
+};
 
 /**
  * A root stack navigator is often used for displaying modals on top of all other content.
@@ -35,21 +36,27 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 function RootNavigator() {
+  const getToken = async () => {
+    const token = await SecureStore.getItemAsync('token');
+    return token
+  }
+  
+  const token = getToken()
+
   return (
-    <Stack.Navigator>
-        <Stack.Screen name="Root" component={Dashboard} options={{ headerShown: false }} />
+      <Stack.Navigator initialRouteName='HomeScreen'>
+        <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ title: 'Home' }} />
+        <Stack.Screen name="RegisterScreen" component={RegisterScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} options={{ headerShown: false }} />
+        <Stack.Screen name="Dashboard" component={Dashboard} options={{ title: 'Dashboard' }} />
         <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
         <Stack.Screen name="Modal" component={ModalScreen} />
-        <Stack.Screen name="HomeScreen" component={HomeScreen} />
-        <Stack.Screen name="Dashboard" component={Dashboard} />
-        <Stack.Screen name="RegisterScreen" component={RegisterScreen} />
-        <Stack.Screen name="LoginScreen" component={LoginScreen} />
-        <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} />
         {/*<Stack.Group screenOptions={{presentation: 'modal'}}>
         </Stack.Group>*/}
     </Stack.Navigator>
-  );
-}
+  )
+};
 
 /**
  * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
@@ -102,4 +109,4 @@ function TabBarIcon(props: {
   color: string;
 }) {
   return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
-}
+};
