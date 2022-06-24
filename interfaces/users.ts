@@ -1,9 +1,11 @@
 export interface IUser {
-    id: string;
-    firstname: string;
-    lastname: string;
-    email: string;
-    job: string;
-    role: string;
-  }
+  id: string;
+  avatar: string | null;
+  firstname: string;
+  lastname: string;
+  email: string;
+  job: string;
+  role: string;
+  teamId: string | null;
+}
   

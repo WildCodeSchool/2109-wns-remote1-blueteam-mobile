@@ -10,16 +10,28 @@ import {
   InMemoryCache,
   ApolloProvider,
 } from '@apollo/client';
+import * as SecureStore from 'expo-secure-store';
 
-import userContext from './context/userContext';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import UserContext from './context/userContext';
 
 import uri from './constants/Uri';
 import { IUser } from './interfaces/users';
 
+const getToken = async () => {
+  const token = await SecureStore.getItemAsync('token');
+  return token
+};
+
+const token = getToken();
+
+console.log(token);
+
 const link = createHttpLink({
   uri,
   credentials: 'include',
+  headers: {
+    authorization: token,
+  },
 });
 
 const client = new ApolloClient({
@@ -33,54 +45,18 @@ export default function App() {
 
   const [user, setUser] = useState<IUser | undefined>(undefined);
 
-  useEffect(() => {
-    const setAsyncStorage = async (object: IUser) => {
-      const jsonValue = JSON.stringify(object)
-      await AsyncStorage.setItem('@active_user', jsonValue)
-    }
-
-    if (user) {
-      try {
-        setAsyncStorage(user)
-      } catch (e) {
-        console.log(e)
-      }    }
-  }, [user]);
-
-  useEffect(() => {
-    const getAsyncStorageData = async () => {
-      try {
-        const jsonValue = await AsyncStorage.getItem('@active_user')
-        const objectToReturn: Promise<IUser | undefined> = jsonValue != null ? JSON.parse(jsonValue) : undefined;
-        return objectToReturn;
-      } catch(e) {
-        console.log(e)
-      }
-    };
-
-    const updateUserState = async () => {
-      const user = await getAsyncStorageData();
-      if (user) {
-        setUser(user);
-      }
-    }
-
-    updateUserState();
-
-  }, []);
-
   if (!isLoadingComplete) {
     return null;
   }
   
   return (
     <ApolloProvider client={client}>
-      <userContext.Provider value={[user, setUser]}>
+      <UserContext.Provider value={[user, setUser]}>
         <SafeAreaProvider>
           <Navigation colorScheme={colorScheme} />
           <StatusBar />
         </SafeAreaProvider>
-      </userContext.Provider>
+      </UserContext.Provider>
     </ApolloProvider>
   );
 }
