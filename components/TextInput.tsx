@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
         marginVertical: 12,
     },
     input: {
+        height: 34,
         backgroundColor: theme.colors.surface,
     },
     error: {

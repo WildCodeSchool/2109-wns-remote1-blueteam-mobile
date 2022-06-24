@@ -1,5 +1,6 @@
-import React, { memo, useState } from 'react';
-import { TouchableOpacity, StyleSheet, Text, View } from 'react-native';
+import React, { memo, useContext, useEffect, useState } from 'react';
+import { gql, useLazyQuery } from '@apollo/client';
+import { TouchableOpacity, StyleSheet, Text, View, ToastAndroid } from 'react-native';
 import Background from '../components/Background';
 import Logo from '../components/Logo';
 import Header from '../components/Header';
@@ -8,16 +9,59 @@ import TextInput from '../components/TextInput';
 import { theme } from '../core/theme';
 import { emailValidator, passwordValidator } from '../core/utils';
 import { Navigation } from './types';
+import * as SecureStore from 'expo-secure-store';
+import userContext from '../context/userContext';
 
 type Props = {
     navigation: Navigation;
 };
 
+const LOGIN = gql`
+    query Query($data: LoginInput!) {
+        login(data: $data) {
+            id
+            firstname
+            lastname
+            email
+            job
+            role
+        }
+    }
+`;
+
 const LoginScreen = ({ navigation }: Props) => {
+    const [, setUser] = useContext(userContext);
+    const [logUserIn, { error, data }] = useLazyQuery(LOGIN);
+
+    console.log(data);
+
+    if (error) {
+        ToastAndroid.show(error.message, ToastAndroid.SHORT);
+    }
+
+    useEffect(() => {
+        const saveValue = async (key: string, value: string) => {
+            await SecureStore.setItemAsync(key, value);
+        };
+        
+        const hello = data?.login;
+
+        if (hello) {
+            const { token, ...user } = hello;
+
+            if (user) {
+            setUser(user);
+            saveValue('user', JSON.stringify(user));
+            saveValue('token', token);
+            };
+        };
+
+    }, [data]);
+
     const [email, setEmail] = useState({ value: '', error: '' });
     const [password, setPassword] = useState({ value: '', error: '' });
 
-    const _onLoginPressed = () => {
+    const onSubmit = async () => {
         const emailError = emailValidator(email.value);
         const passwordError = passwordValidator(password.value);
 
@@ -27,16 +71,13 @@ const LoginScreen = ({ navigation }: Props) => {
             return;
         }
 
-        navigation.navigate('Dashboard');
+        await logUserIn({ variables: { data: { email: email.value, password: password.value } } });
     };
 
     return (
         <Background>
-
             <Logo />
-
             <Header>Welcome back.</Header>
-
             <TextInput
                 label="Email"
                 returnKeyType="next"
@@ -45,11 +86,10 @@ const LoginScreen = ({ navigation }: Props) => {
                 error={!!email.error}
                 errorText={email.error}
                 autoCapitalize="none"
-                autoCompleteType="email"
+                autoComplete="email"
                 textContentType="emailAddress"
                 keyboardType="email-address"
             />
-
             <TextInput
                 label="Password"
                 returnKeyType="done"
@@ -58,8 +98,8 @@ const LoginScreen = ({ navigation }: Props) => {
                 error={!!password.error}
                 errorText={password.error}
                 secureTextEntry={true}
+                autoComplete="password"
             />
-
             <View style={styles.forgotPassword}>
                 <TouchableOpacity
                     onPress={() => navigation.navigate('ForgotPasswordScreen')}
@@ -67,11 +107,9 @@ const LoginScreen = ({ navigation }: Props) => {
                     <Text style={styles.label}>Forgot your password?</Text>
                 </TouchableOpacity>
             </View>
-
-            <Button mode="contained" onPress={_onLoginPressed}>
+            <Button mode="contained" onPress={onSubmit}>
                 Login
             </Button>
-
             <View style={styles.row}>
                 <Text style={styles.label}>Don’t have an account? </Text>
                 <TouchableOpacity onPress={() => navigation.navigate('RegisterScreen')}>
