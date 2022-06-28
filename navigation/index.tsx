@@ -17,8 +17,15 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
 import RegisterScreen from "../screens/RegisterScreen";
-import {Dashboard, ForgotPasswordScreen, HomeScreen, LoginScreen} from "../screens";
+import {
+  Dashboard,
+  ForgotPasswordScreen,
+  HomeScreen,
+  LoginScreen
+} from "../screens";
 import * as SecureStore from 'expo-secure-store';
+
+import useUser from '../hooks/useUser';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -37,18 +44,34 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
 const RootNavigator = () => {
+  const [user, , loading] = useUser();
+
+  if (loading) {
+    return null; // need to add a proper loader
+  };
+
+  if (user) {
+    return (
+        <Stack.Navigator initialRouteName='Dashboard'>
+          <Stack.Screen name="Dashboard" component={Dashboard} options={{ title: 'Dashboard' }} />
+          <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+          <Stack.Screen name="Modal" component={ModalScreen} />
+          {/*<Stack.Group screenOptions={{presentation: 'modal'}}>
+          </Stack.Group>*/}
+      </Stack.Navigator>
+    )
+  };
 
   return (
-      <Stack.Navigator initialRouteName='HomeScreen'>
-        <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="RegisterScreen" component={RegisterScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} options={{ headerShown: false }} />
-        <Stack.Screen name="Dashboard" component={Dashboard} options={{ title: 'Dashboard' }} />
-        <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-        <Stack.Screen name="Modal" component={ModalScreen} />
-        {/*<Stack.Group screenOptions={{presentation: 'modal'}}>
-        </Stack.Group>*/}
+    <Stack.Navigator initialRouteName='HomeScreen'>
+      <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="RegisterScreen" component={RegisterScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+      <Stack.Screen name="Modal" component={ModalScreen} />
+      {/*<Stack.Group screenOptions={{presentation: 'modal'}}>
+      </Stack.Group>*/}
     </Stack.Navigator>
   )
 };
