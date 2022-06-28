@@ -34,8 +34,6 @@ const LoginScreen = ({ navigation }: Props) => {
     const [, setUser] = useContext(userContext);
     const [logUserIn, { error, data }] = useLazyQuery(LOGIN);
 
-    console.log("data", data);
-
     if (error) {
         ToastAndroid.show(error.message, ToastAndroid.SHORT);
     }
@@ -49,9 +47,6 @@ const LoginScreen = ({ navigation }: Props) => {
 
         if (login) {
             const { token, ...user } = login;
-
-            console.log("user", user);
-            console.log('token', token);
 
             if (user && token) {
                 setUser(user);
