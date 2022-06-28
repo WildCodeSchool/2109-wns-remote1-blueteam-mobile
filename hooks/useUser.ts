@@ -26,7 +26,7 @@ const useUser = (): [IUser | undefined, LazyQueryExecFunction<IUser, OperationVa
 
   const [getUser, { error, loading, data }] = useLazyQuery(GET_USER);
 
-  console.log('useUser', data);
+  // console.log('useUser', data);
 
   useEffect(() => {
     const connectedUser: IConnectedUser | undefined = data?.getConnectedUser || undefined;

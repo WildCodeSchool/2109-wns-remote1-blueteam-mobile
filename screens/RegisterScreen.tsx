@@ -13,7 +13,6 @@ import {
     passwordValidator,
     nameValidator,
 } from '../core/utils';
-import userContext from '../context/userContext';
 
 type Props = {
     navigation: Navigation;
@@ -33,7 +32,6 @@ const REGISTER = gql`
 `;
 
 const RegisterScreen = ({ navigation }: Props) => {
-    const [, setUser] = useContext(userContext);
     const [register, { data, error }] = useMutation(REGISTER);
 
     if (error) {
@@ -45,12 +43,6 @@ const RegisterScreen = ({ navigation }: Props) => {
     const [email, setEmail] = useState({ value: '', error: '' });
     const [job, setJob] = useState({ value: '', error: '' });
     const [password, setPassword] = useState({ value: '', error: '' });
-
-    useEffect(() => {
-        if (data) {
-          setUser(data.register);
-        }
-    }, [data]);
 
     const onSubmit = () => {
         const nameError = nameValidator(firstname.value);
@@ -74,79 +66,79 @@ const RegisterScreen = ({ navigation }: Props) => {
         
         register({ variables: { data: newUser } });
         
-        navigation.navigate('Dashboard');
+        navigation.navigate('LoginScreen');
     };
 
     return (
-    <Background>
+        <Background>
 
-        <Header>Create Account</Header>
+            <Header>Create Account</Header>
 
-        <TextInput
-            label="Firstname"
-            returnKeyType="next"
-            value={firstname.value}
-            onChangeText={text => setFirstname({ value: text, error: '' })}
-            error={!!firstname.error}
-            errorText={firstname.error}
-            autoComplete="firstname"
-        />
+            <TextInput
+                label="Firstname"
+                returnKeyType="next"
+                value={firstname.value}
+                onChangeText={text => setFirstname({ value: text, error: '' })}
+                error={!!firstname.error}
+                errorText={firstname.error}
+                autoComplete="firstname"
+            />
 
-        <TextInput
-            label="Lastname"
-            returnKeyType="next"
-            value={lastname.value}
-            onChangeText={text => setLastname({ value: text, error: '' })}
-            error={!!lastname.error}
-            errorText={lastname.error}
-            autoComplete="lastname"
-        />
+            <TextInput
+                label="Lastname"
+                returnKeyType="next"
+                value={lastname.value}
+                onChangeText={text => setLastname({ value: text, error: '' })}
+                error={!!lastname.error}
+                errorText={lastname.error}
+                autoComplete="lastname"
+            />
 
-        <TextInput
-            label="Email"
-            returnKeyType="next"
-            value={email.value}
-            onChangeText={text => setEmail({ value: text, error: '' })}
-            error={!!email.error}
-            errorText={email.error}
-            autoCapitalize="none"
-            autoComplete="email"
-            textContentType="emailAddress"
-            keyboardType="email-address"
-        />
+            <TextInput
+                label="Email"
+                returnKeyType="next"
+                value={email.value}
+                onChangeText={text => setEmail({ value: text, error: '' })}
+                error={!!email.error}
+                errorText={email.error}
+                autoCapitalize="none"
+                autoComplete="email"
+                textContentType="emailAddress"
+                keyboardType="email-address"
+            />
 
-        <TextInput
-            label="Job"
-            returnKeyType="next"
-            value={job.value}
-            onChangeText={text => setJob({ value: text, error: '' })}
-            error={!!job.error}
-            errorText={job.error}
-            autoComplete="job"
-        />
+            <TextInput
+                label="Job"
+                returnKeyType="next"
+                value={job.value}
+                onChangeText={text => setJob({ value: text, error: '' })}
+                error={!!job.error}
+                errorText={job.error}
+                autoComplete="job"
+            />
 
-        <TextInput
-            label="Password"
-            returnKeyType="done"
-            value={password.value}
-            onChangeText={text => setPassword({ value: text, error: '' })}
-            error={!!password.error}
-            errorText={password.error}
-            secureTextEntry={true}
-            autoComplete="password"
-        />
+            <TextInput
+                label="Password"
+                returnKeyType="done"
+                value={password.value}
+                onChangeText={text => setPassword({ value: text, error: '' })}
+                error={!!password.error}
+                errorText={password.error}
+                secureTextEntry={true}
+                autoComplete="password"
+            />
 
-        <Button mode="contained" onPress={onSubmit} style={styles.button}>
-            Sign Up
-        </Button>
+            <Button mode="contained" onPress={onSubmit} style={styles.button}>
+                Sign Up
+            </Button>
 
-        <View style={styles.row}>
-        <Text style={styles.label}>Already have an account? </Text>
-        <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
-            <Text style={styles.link}>Login</Text>
-        </TouchableOpacity>
-        </View>
-    </Background>
+            <View style={styles.row}>
+            <Text style={styles.label}>Already have an account? </Text>
+            <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>
+                <Text style={styles.link}>Login</Text>
+            </TouchableOpacity>
+            </View>
+        </Background>
 );
 };
 

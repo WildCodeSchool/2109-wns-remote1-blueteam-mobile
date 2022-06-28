@@ -3,6 +3,7 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
+import { useEffect } from 'react';
 import { FontAwesome } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
@@ -35,17 +36,11 @@ export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeNa
  */
 const Stack = createNativeStackNavigator<RootStackParamList>();
 
-function RootNavigator() {
-  const getToken = async () => {
-    const token = await SecureStore.getItemAsync('token');
-    return token
-  }
-  
-  const token = getToken()
+const RootNavigator = () => {
 
   return (
       <Stack.Navigator initialRouteName='HomeScreen'>
-        <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ title: 'Home' }} />
+        <Stack.Screen name="HomeScreen" component={HomeScreen} options={{ headerShown: false }} />
         <Stack.Screen name="RegisterScreen" component={RegisterScreen} options={{ headerShown: false }} />
         <Stack.Screen name="LoginScreen" component={LoginScreen} options={{ headerShown: false }} />
         <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} options={{ headerShown: false }} />
