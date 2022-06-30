@@ -17,7 +17,7 @@ type Props = {
 };
 
 const LOGIN = gql`
-    query Query($data: LoginInput!) {
+    query Login($data: LoginInput!) {
         login(data: $data) {
             id
             firstname
@@ -25,6 +25,7 @@ const LOGIN = gql`
             email
             job
             role
+            token
         }
     }
 `;
@@ -32,8 +33,6 @@ const LOGIN = gql`
 const LoginScreen = ({ navigation }: Props) => {
     const [, setUser] = useContext(userContext);
     const [logUserIn, { error, data }] = useLazyQuery(LOGIN);
-
-    console.log(data);
 
     if (error) {
         ToastAndroid.show(error.message, ToastAndroid.SHORT);
@@ -44,24 +43,23 @@ const LoginScreen = ({ navigation }: Props) => {
             await SecureStore.setItemAsync(key, value);
         };
         
-        const hello = data?.login;
+        const login = data?.login;
 
-        if (hello) {
-            const { token, ...user } = hello;
+        if (login) {
+            const { token, ...user } = login;
 
-            if (user) {
-            setUser(user);
-            saveValue('user', JSON.stringify(user));
-            saveValue('token', token);
+            if (user && token) {
+                setUser(user);
+                saveValue('token', token);
             };
         };
 
-    }, [data]);
+    }, [data?.login]);
 
     const [email, setEmail] = useState({ value: '', error: '' });
     const [password, setPassword] = useState({ value: '', error: '' });
 
-    const onSubmit = async () => {
+    const onSubmit = () => {
         const emailError = emailValidator(email.value);
         const passwordError = passwordValidator(password.value);
 
@@ -71,7 +69,7 @@ const LoginScreen = ({ navigation }: Props) => {
             return;
         }
 
-        await logUserIn({ variables: { data: { email: email.value, password: password.value } } });
+        logUserIn({ variables: { data: { email: email.value, password: password.value } } });
     };
 
     return (

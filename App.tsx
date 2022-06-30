@@ -1,43 +1,18 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+import { NativeBaseProvider } from "native-base";
+
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
-import {
-  ApolloClient,
-  createHttpLink,
-  InMemoryCache,
-  ApolloProvider,
-} from '@apollo/client';
-import * as SecureStore from 'expo-secure-store';
+
+import ConfiguredApolloProvider from './context/ConfiguredApolloProvider';
 
 import UserContext from './context/userContext';
 
-import uri from './constants/Uri';
 import { IUser } from './interfaces/users';
-
-const getToken = async () => {
-  const token = await SecureStore.getItemAsync('token');
-  return token
-};
-
-const token = getToken();
-
-console.log(token);
-
-const link = createHttpLink({
-  uri,
-  credentials: 'include',
-  headers: {
-    authorization: token,
-  },
-});
-
-const client = new ApolloClient({
-  cache: new InMemoryCache(),
-  link,
-});
 
 export default function App() {
   const isLoadingComplete = useCachedResources();
@@ -50,13 +25,15 @@ export default function App() {
   }
   
   return (
-    <ApolloProvider client={client}>
+    <ConfiguredApolloProvider>
       <UserContext.Provider value={[user, setUser]}>
-        <SafeAreaProvider>
-          <Navigation colorScheme={colorScheme} />
-          <StatusBar />
-        </SafeAreaProvider>
+        <NativeBaseProvider>
+          <SafeAreaProvider>
+            <Navigation colorScheme={colorScheme} />
+            <StatusBar />
+          </SafeAreaProvider>
+        </NativeBaseProvider>
       </UserContext.Provider>
-    </ApolloProvider>
+    </ConfiguredApolloProvider>
   );
 }
