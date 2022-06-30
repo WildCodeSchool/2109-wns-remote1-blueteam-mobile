@@ -1,6 +1,8 @@
 import { memo, useState } from "react";
 import { useWindowDimensions } from "react-native";
-import { TabView, SceneMap } from "react-native-tab-view";
+import { TabView, TabBar } from "react-native-tab-view";
+
+import Colors from "../../constants/Colors";
 
 import Dashboard from "./Dashboard";
 import Team from "./Team";
@@ -28,13 +30,13 @@ const renderScene = (scene: { route: IRoute }) => {
   }
 };
 
-const Tapbar = () => {
+const TapbarComponent = () => {
   const layout = useWindowDimensions();
 
   const [index, setIndex] = useState(0);
   const [routes] = useState([{
     key: "first",
-    title: "Dashboard"
+    title: "Home",
   }, {
     key: "second",
     title: "Team"
@@ -49,15 +51,32 @@ const Tapbar = () => {
     title: "Settings"
   }]);
 
+  const renderTabBar = props => (
+    <TabBar
+      {...props}
+      indicatorStyle={{
+        backgroundColor: Colors.light.tabIconSelected,
+      }}
+      indicatorContainerStyle={{
+        backgroundColor: Colors.light.tabIconDefault,
+      }}
+      labelStyle={{
+        color: Colors.light.text,
+        fontSize: 9,
+      }}
+    />
+  );
 
   return (
     <TabView
+      renderTabBar={renderTabBar}
       navigationState={{ index, routes }}
       renderScene={renderScene}
       onIndexChange={setIndex}
       initialLayout={{ width: layout.width }}
+      tabBarPosition="bottom"
     />
   );
 };
 
-export default memo(Tapbar);
+export default memo(TapbarComponent);

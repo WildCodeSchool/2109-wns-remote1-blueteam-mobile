@@ -1,10 +1,8 @@
 import React, { memo, useContext } from 'react';
-import Background from '../../components/Background';
-import Logo from '../../components/Logo';
 import Header from '../../components/Header';
 import Paragraph from '../../components/Paragraph';
 import Button from '../../components/Button';
-import {StyleSheet, ToastAndroid, View} from "react-native";
+import { ToastAndroid, View } from "react-native";
 import * as SecureStore from 'expo-secure-store';
 import userContext from '../../context/userContext';
 
