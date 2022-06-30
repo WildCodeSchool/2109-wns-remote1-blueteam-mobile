@@ -71,9 +71,7 @@ const RegisterScreen = ({ navigation }: Props) => {
 
     return (
         <Background>
-
             <Header>Create Account</Header>
-
             <TextInput
                 label="Firstname"
                 returnKeyType="next"
@@ -83,7 +81,6 @@ const RegisterScreen = ({ navigation }: Props) => {
                 errorText={firstname.error}
                 autoComplete="firstname"
             />
-
             <TextInput
                 label="Lastname"
                 returnKeyType="next"
@@ -93,7 +90,6 @@ const RegisterScreen = ({ navigation }: Props) => {
                 errorText={lastname.error}
                 autoComplete="lastname"
             />
-
             <TextInput
                 label="Email"
                 returnKeyType="next"
@@ -106,7 +102,6 @@ const RegisterScreen = ({ navigation }: Props) => {
                 textContentType="emailAddress"
                 keyboardType="email-address"
             />
-
             <TextInput
                 label="Job"
                 returnKeyType="next"
@@ -116,7 +111,6 @@ const RegisterScreen = ({ navigation }: Props) => {
                 errorText={job.error}
                 autoComplete="job"
             />
-
             <TextInput
                 label="Password"
                 returnKeyType="done"
@@ -127,11 +121,9 @@ const RegisterScreen = ({ navigation }: Props) => {
                 secureTextEntry={true}
                 autoComplete="password"
             />
-
             <Button mode="contained" onPress={onSubmit} style={styles.button}>
                 Sign Up
             </Button>
-
             <View style={styles.row}>
             <Text style={styles.label}>Already have an account? </Text>
             <TouchableOpacity onPress={() => navigation.navigate('LoginScreen')}>

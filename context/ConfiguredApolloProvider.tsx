@@ -10,7 +10,7 @@ import {
 import { onError } from "@apollo/client/link/error";
 import * as SecureStore from 'expo-secure-store';
 
-import uri from './constants/Uri';
+import uri from '../constants/Uri';
 
 const cache = new InMemoryCache();
 
