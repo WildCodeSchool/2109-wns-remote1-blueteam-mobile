@@ -1,31 +1,23 @@
-/**
- * If you are not familiar with React Navigation, refer to the "Fundamentals" guide:
- * https://reactnavigation.org/docs/getting-started
- *
- */
-import { useEffect } from 'react';
-import { FontAwesome } from '@expo/vector-icons';
-import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import * as React from 'react';
 import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import * as React from 'react';
-import { ColorSchemeName, Pressable } from 'react-native';
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
-import ModalScreen from '../screens/ModalScreen';
-import NotFoundScreen from '../screens/NotFoundScreen';
-import { RootStackParamList, RootTabParamList, RootTabScreenProps } from '../types';
+import { ColorSchemeName } from 'react-native';
+
+import { RootStackParamList } from '../types';
 import LinkingConfiguration from './LinkingConfiguration';
-import RegisterScreen from "../screens/RegisterScreen";
-import {
-  Dashboard,
-  ForgotPasswordScreen,
-  HomeScreen,
-  LoginScreen
-} from "../screens";
-import * as SecureStore from 'expo-secure-store';
+
 
 import useUser from '../hooks/useUser';
+
+import {
+  ForgotPasswordScreen,
+  HomeScreen,
+  LoginScreen,
+  RegisterScreen
+} from '../screens';
+import NotFoundScreen from '../screens/NotFoundScreen';
+import ModalScreen from '../screens/ModalScreen';
+import Tapbar from '../screens/dashboard/TapBar';
 
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
@@ -52,14 +44,14 @@ const RootNavigator = () => {
 
   if (user) {
     return (
-        <Stack.Navigator initialRouteName='Dashboard'>
-          <Stack.Screen name="Dashboard" component={Dashboard} options={{ title: 'Dashboard' }} />
-          <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
-          <Stack.Screen name="Modal" component={ModalScreen} />
-          {/*<Stack.Group screenOptions={{presentation: 'modal'}}>
-          </Stack.Group>*/}
+      <Stack.Navigator initialRouteName='TapBar'>
+        <Stack.Screen name="TapBar" component={Tapbar} options={{ title: 'Dashboard' }} />
+        <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
+        <Stack.Screen name="Modal" component={ModalScreen} />
+        {/*<Stack.Group screenOptions={{presentation: 'modal'}}>
+        </Stack.Group>*/}
       </Stack.Navigator>
-    )
+    );
   };
 
   return (
@@ -70,61 +62,6 @@ const RootNavigator = () => {
       <Stack.Screen name="ForgotPasswordScreen" component={ForgotPasswordScreen} options={{ headerShown: false }} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Screen name="Modal" component={ModalScreen} />
-      {/*<Stack.Group screenOptions={{presentation: 'modal'}}>
-      </Stack.Group>*/}
     </Stack.Navigator>
-  )
-};
-
-/**
- * A bottom tab navigator displays tab buttons on the bottom of the display to switch screens.
- * https://reactnavigation.org/docs/bottom-tab-navigator
- */
-/*
-const BottomTab = createBottomTabNavigator<RootTabParamList>();
-
-function BottomTabNavigator() {
-  const colorScheme = useColorScheme();
-
-  return (
-    <BottomTab.Navigator
-      initialRouteName="TabOne"
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme].tint,
-      }}>
-      <BottomTab.Screen
-        name="TabOne"
-        component={Dashboard}
-        options={({ navigation }: RootTabScreenProps<'TabOne'>) => ({
-          title: 'Dashboard',
-          tabBarIcon: ({ color }) => <TabBarIcon name="code" color={color} />,
-          headerRight: () => (
-            <Pressable
-              onPress={() => navigation.navigate('Modal')}
-              style={({ pressed }) => ({
-                opacity: pressed ? 0.5 : 1,
-              })}>
-              <FontAwesome
-                name="info-circle"
-                size={25}
-                color={Colors[colorScheme].text}
-                style={{ marginRight: 15 }}
-              />
-            </Pressable>
-          ),
-        })}
-      />
-    </BottomTab.Navigator>
   );
-}
-*/
-
-/**
- * You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
- */
-function TabBarIcon(props: {
-  name: React.ComponentProps<typeof FontAwesome>['name'];
-  color: string;
-}) {
-  return <FontAwesome size={30} style={{ marginBottom: -3 }} {...props} />;
 };
