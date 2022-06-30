@@ -13,19 +13,19 @@ import Settings from "./Settings";
 interface IRoute {
   key: string;
   title: string;
-}
+};
 
 const renderScene = (scene: { route: IRoute }) => {
   switch (scene.route.key) {
-    case 'first':
+    case 'home':
       return <Dashboard />;
-    case 'second':
+    case 'team':
       return <Team />;
-    case 'third':
+    case 'projectList':
       return <ProjectList />;
-    case 'fourth':
+    case 'taskList':
       return <TaskList />;
-    case 'fifth':
+    case 'settings':
       return <Settings />;
   }
 };
@@ -35,19 +35,19 @@ const TapbarComponent = () => {
 
   const [index, setIndex] = useState(0);
   const [routes] = useState([{
-    key: "first",
+    key: "home",
     title: "Home",
   }, {
-    key: "second",
+    key: "team",
     title: "Team"
   }, {
-    key: "third",
+    key: "projectList",
     title: "Projects"
   }, {
-    key: "fourth",
+    key: "taskList",
     title: "Tasks"
-    }, {  
-    key: "fifth",
+  }, {  
+    key: "settings",
     title: "Settings"
   }]);
 
