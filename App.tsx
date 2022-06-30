@@ -1,11 +1,14 @@
 import { useState } from 'react';
 import { StatusBar } from 'expo-status-bar';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
+
+import { NativeBaseProvider } from "native-base";
+
 import useCachedResources from './hooks/useCachedResources';
 import useColorScheme from './hooks/useColorScheme';
 import Navigation from './navigation';
 
-import ConfiguredApolloProvider from './ConfiguredApolloProvider';
+import ConfiguredApolloProvider from './context/ConfiguredApolloProvider';
 
 import UserContext from './context/userContext';
 
@@ -24,10 +27,12 @@ export default function App() {
   return (
     <ConfiguredApolloProvider>
       <UserContext.Provider value={[user, setUser]}>
-        <SafeAreaProvider>
-          <Navigation colorScheme={colorScheme} />
-          <StatusBar />
-        </SafeAreaProvider>
+        <NativeBaseProvider>
+          <SafeAreaProvider>
+            <Navigation colorScheme={colorScheme} />
+            <StatusBar />
+          </SafeAreaProvider>
+        </NativeBaseProvider>
       </UserContext.Provider>
     </ConfiguredApolloProvider>
   );
