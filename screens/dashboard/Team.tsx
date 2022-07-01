@@ -6,6 +6,7 @@ import { gql, useQuery } from '@apollo/client';
 import Colors from "../../constants/Colors";
 
 import SpinnerLoading from '../../components/SpinnerLoading';
+import HeaderList from '../../components/HeaderList';
   
 interface ITeam {
     id: string;
@@ -21,6 +22,23 @@ const TEAM_LIST = gql`
         teams {
             id
             name
+        }
+    }
+`;
+
+const TEAM_CREATE = gql`
+    mutation CreateTeam($data: TeamCreateInput!) {
+        createTeam(data: $data) {
+            id
+            name
+            _count {
+            members
+            }
+            members {
+            id
+            firstname
+            lastname
+            }
         }
     }
 `;
@@ -64,6 +82,12 @@ const Team: FC = () => {
             renderItem={renderItem}
             keyExtractor={item => item.id}
             extraData={selectedId}
+            ListHeaderComponent={
+                <HeaderList
+                    buttonMessage="Create a team"
+                    gqlQuery={TEAM_CREATE}
+                    refetchQuery={TEAM_LIST}
+                />}
         />
     );
 };
